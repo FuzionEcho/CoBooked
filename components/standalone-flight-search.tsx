@@ -1400,30 +1400,6 @@ export function StandaloneFlightSearch() {
               )}
             </Button>
           </CardContent>
-          {/* Match Game CTA */}
-          <div className="mt-4">
-            <Card className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white overflow-hidden">
-              <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold">Don't know where to go?</h3>
-                    <p className="text-white/90">
-                      Play our match game and discover your perfect destination! We'll show you random flights to places
-                      you might love.
-                    </p>
-                  </div>
-                  <Button
-                    variant="secondary"
-                    size="lg"
-                    className="whitespace-nowrap bg-white text-indigo-600 hover:bg-white/90"
-                    onClick={() => (window.location.href = "/match-game")}
-                  >
-                    Play Match Game
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </Card>
       </div>
 
