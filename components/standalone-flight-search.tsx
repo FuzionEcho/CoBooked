@@ -1197,6 +1197,10 @@ export function StandaloneFlightSearch() {
                 </Label>
                 <Switch id="use-mock-data" checked={useMockData} onCheckedChange={setUseMockData} />
               </div>
+
+              <Button variant="outline" size="icon" className="ml-2" onClick={swapAirports} title="Swap Airports">
+                <ArrowLeftRight className="h-4 w-4" />
+              </Button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -1317,15 +1321,6 @@ export function StandaloneFlightSearch() {
                   </div>
                 )}
               </div>
-
-              <Button
-                variant="outline"
-                size="icon"
-                className="absolute left-1/2 top-1/2 transform -translate-x-1/2 md:block hidden"
-                onClick={swapAirports}
-              >
-                <ArrowLeftRight className="h-4 w-4" />
-              </Button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

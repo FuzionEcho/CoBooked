@@ -1,7 +1,7 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 // Define the Database type
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       destinations: {
@@ -251,4 +251,5 @@ export interface Database {
 }
 
 // Explicitly export Database as a named export
+export type { Json }
 export type { Database }

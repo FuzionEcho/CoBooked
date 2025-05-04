@@ -49,6 +49,7 @@ export function Header() {
     { name: "Home", path: "/" },
     { name: "Flights", path: "/flights" },
     { name: "Join Trip", path: "/join-trip" }, // Updated to link to the new join-trip page
+    { name: "Car Hire", path: "/car-hire" },
   ]
 
   // Add Profile button with conditional path based on authentication status

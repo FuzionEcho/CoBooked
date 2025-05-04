@@ -172,27 +172,20 @@ export default function ResultsPage() {
     }
   }
 
-  const handleSearchFlights = (destination: Destination) => {
-    // Get today's date and a date 2 weeks from now for default travel dates
+  const handleSearchFlights = (destination: string) => {
+    // Set default dates
     const today = new Date()
-    const twoWeeksFromNow = new Date(today)
-    twoWeeksFromNow.setDate(today.getDate() + 14)
+    const twoWeeksLater = new Date()
+    twoWeeksLater.setDate(today.getDate() + 14)
 
-    // Format dates as YYYY-MM-DD for URL parameters
+    // Format dates as YYYY-MM-DD
     const departureDate = today.toISOString().split("T")[0]
-    const returnDate = twoWeeksFromNow.toISOString().split("T")[0]
+    const returnDate = twoWeeksLater.toISOString().split("T")[0]
 
-    // Build search URL with multiple parameters
-    const searchParams = new URLSearchParams({
-      destination: destination.iataCode || destination.name,
-      departureDate: departureDate,
-      returnDate: returnDate,
-      passengers: "1",
-      cabinClass: "economy",
-      // We don't have origin info, so we'll let the user select it on the flights page
-    })
-
-    router.push(`/flights?${searchParams.toString()}`)
+    // Redirect to flights page with pre-filled parameters
+    router.push(
+      `/flights?destination=${encodeURIComponent(destination)}&departureDate=${departureDate}&returnDate=${returnDate}&passengers=1&cabinClass=economy`,
+    )
   }
 
   const handlePlayAgain = () => {
@@ -205,6 +198,24 @@ export default function ResultsPage() {
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-4">Finding your matches...</h1>
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto"></div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 pt-20 pb-10">
+        <div className="container mx-auto px-4">
+          <div className="max-w-md mx-auto">
+            <Card>
+              <CardContent className="pt-6 text-center">
+                <h2 className="text-xl font-semibold mb-4">Oops!</h2>
+                <p className="mb-6">{error}</p>
+                <Button onClick={handlePlayAgain}>Play Again</Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     )
@@ -355,10 +366,26 @@ export default function ResultsPage() {
                                 </div>
                               </div>
                             </div>
-                            <Button variant="outline" size="sm" onClick={() => handleSearchFlights(result.destination)}>
-                              <Plane className="h-4 w-4 mr-1" />
-                              Book This Flight
-                            </Button>
+                            <div className="flex gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() =>
+                                  handleSearchFlights(result.destination.iataCode || result.destination.name)
+                                }
+                              >
+                                Book This Flight
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() =>
+                                  router.push(`/car-hire?location=${encodeURIComponent(result.destination.name)}`)
+                                }
+                              >
+                                Find Car Rental
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -400,7 +427,9 @@ export default function ResultsPage() {
                             <p className="text-sm text-muted-foreground">Best Flight Deal</p>
                             <p className="text-2xl font-bold">${result.flightData[0]?.price || randomPrice}</p>
                           </div>
-                          <Button onClick={() => handleSearchFlights(result.destination)}>
+                          <Button
+                            onClick={() => handleSearchFlights(result.destination.iataCode || result.destination.name)}
+                          >
                             <Plane className="h-4 w-4 mr-1" />
                             Book Flight
                           </Button>
